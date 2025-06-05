@@ -1,0 +1,191 @@
+# Sistema de Gestión de Turnos Médicos
+
+Un sistema web completo para la gestión de turnos médicos con autenticación local y Google OAuth, desarrollado en PHP con MySQL.
+
+## 🚀 Características
+
+- **Autenticación dual**: Login con usuario/contraseña local y Google OAuth
+- **Gestión de turnos**: Crear, editar, eliminar y filtrar turnos médicos
+- **Especialidades médicas**: Clínico, Pediatría, Cardiología, Dermatología
+- **Interfaz moderna**: Diseño responsive con Tailwind CSS
+- **Validaciones**: Fechas futuras, campos obligatorios
+- **Seguridad**: Contraseñas hasheadas, prepared statements
+
+## 📋 Requisitos del Sistema
+
+- **XAMPP** (Apache + MySQL + PHP)
+- **PHP 7.4+**
+- **MySQL 5.7+**
+- **Composer** (para dependencias de Google OAuth)
+- **Navegador web moderno**
+
+## 🛠️ Instalación
+
+### 1. Descargar e instalar XAMPP
+1. Descarga XAMPP desde [https://www.apachefriends.org/](https://www.apachefriends.org/)
+2. Instala XAMPP en tu sistema
+3. Inicia Apache y MySQL desde el panel de control de XAMPP
+
+### 2. Clonar/Descargar el proyecto
+```bash
+# Opción 1: Si tienes Git
+git clone [URL_DEL_REPOSITORIO]
+
+# Opción 2: Descargar ZIP
+# Descarga el archivo ZIP y extráelo en c:/xampp/htdocs/
+```
+
+### 3. Ubicar los archivos
+Coloca todos los archivos del proyecto en:
+```
+c:/xampp/htdocs/tu-proyecto/
+```
+
+### 4. Instalar dependencias de Google OAuth
+```bash
+# Navega al directorio del proyecto
+cd c:/xampp/htdocs/tu-proyecto/
+
+# Instala las dependencias con Composer
+composer install
+```
+
+Si no tienes Composer instalado:
+1. Descarga desde [https://getcomposer.org/](https://getcomposer.org/)
+2. Instálalo siguiendo las instrucciones
+3. Ejecuta `composer install` en el directorio del proyecto
+
+### 5. Configurar la base de datos
+
+#### Crear la base de datos:
+1. Abre phpMyAdmin: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
+2. Crea una nueva base de datos llamada `clinica`
+
+#### Crear tabla de usuarios:
+```sql
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### Crear tabla de turnos:
+```sql
+CREATE TABLE turnos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    especialidad VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+#### Insertar usuario de prueba:
+```sql
+INSERT INTO usuarios (usuario, password, email) 
+VALUES ('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@test.com');
+-- Contraseña: password
+```
+
+### 6. Configurar Google OAuth (Opcional)
+
+1. Ve a [Google Cloud Console](https://console.cloud.google.com/)
+2. Crea un nuevo proyecto o selecciona uno existente
+3. Habilita la API de Google+
+4. Crea credenciales OAuth 2.0
+5. Configura la URI de redirección: `http://localhost/tu-proyecto/login.php`
+6. Actualiza `config.php` con tus credenciales:
+
+```php
+$google_client->setClientId('TU_CLIENT_ID');
+$google_client->setClientSecret('TU_CLIENT_SECRET');
+```
+
+## 🚀 Uso del Sistema
+
+### Acceso al sistema
+1. Abre tu navegador
+2. Ve a: `http://localhost/tu-proyecto/`
+
+### Credenciales de prueba
+- **Usuario**: admin
+- **Contraseña**: password
+
+### Funcionalidades principales
+
+#### 1. Iniciar Sesión
+- **Login local**: Usa usuario y contraseña
+- **Google OAuth**: Haz clic en "Login With Google"
+
+#### 2. Gestión de Turnos
+- **Agregar turno**: Completa el formulario con paciente, fecha, hora y especialidad
+- **Editar turno**: Haz clic en "Editar" en la tabla
+- **Eliminar turno**: Haz clic en "Eliminar" (con confirmación)
+- **Filtrar**: Selecciona una especialidad para filtrar
+
+#### 3. Cerrar Sesión
+- Haz clic en "Cerrar sesión" para salir del sistema
+
+## 📁 Estructura del Proyecto
+
+```
+tu-proyecto/
+├── index.php          # Página de login
+├── login.php          # Procesamiento de autenticación
+├── sistema.php        # Dashboard principal
+├── logout.php         # Cerrar sesión
+├── config.php         # Configuración de Google OAuth
+├── con_db.php         # Conexión a base de datos
+├── register.php       # Registro de usuarios
+├── recuperar_clave.php # Recuperación de contraseña
+├── composer.json      # Dependencias de Composer
+├── vendor/            # Librerías de Google OAuth
+└── README.md          # Este archivo
+```
+
+## 🔧 Solución de Problemas
+
+### Error: "No se puede iniciar sesión"
+- Verifica que Apache y MySQL estén ejecutándose
+- Confirma que la base de datos `clinica` existe
+- Revisa las credenciales en `con_db.php`
+
+### Error: "Google OAuth no funciona"
+- Verifica las credenciales en `config.php`
+- Confirma que la URI de redirección esté configurada correctamente
+- Asegúrate de que `composer install` se ejecutó correctamente
+
+### Error: "Página no encontrada"
+- Verifica que los archivos estén en `c:/xampp/htdocs/`
+- Confirma que Apache esté ejecutándose
+- Revisa la URL en el navegador
+
+## 🛡️ Seguridad
+
+- Las contraseñas se almacenan hasheadas con `password_hash()`
+- Se usan prepared statements para prevenir SQL injection
+- Las sesiones se manejan de forma segura
+- Validación de datos en el frontend y backend
+
+## 📝 Notas Adicionales
+
+- El sistema está configurado para desarrollo local
+- Para producción, actualiza las configuraciones de seguridad
+- Cambia las credenciales de Google OAuth para tu dominio
+- Considera implementar HTTPS en producción
+
+## 🤝 Soporte
+
+Si encuentras problemas:
+1. Verifica que todos los requisitos estén instalados
+2. Revisa los logs de error de Apache
+3. Confirma la configuración de la base de datos
+4. Asegúrate de que las dependencias estén instaladas
+
+---
+
+**¡Listo para usar!** 🎉
