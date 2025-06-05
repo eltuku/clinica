@@ -142,8 +142,6 @@ tu-proyecto/
 ├── con_db.php         # Conexión a base de datos
 ├── register.php       # Registro de usuarios
 ├── recuperar_clave.php # Recuperación de contraseña
-├── composer.json      # Dependencias de Composer
-├── vendor/            # Librerías de Google OAuth
 └── README.md          # Este archivo
 ```
 
