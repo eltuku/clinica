@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 include('config.php');
 
 // Si ya hay sesión activa, redirige a sistema.php
