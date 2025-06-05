@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 include("con_db.php");
 include("config.php");
 
