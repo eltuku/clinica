@@ -1,8 +1,5 @@
 <?php
 
-//start session on web page
-//session_destroy();
-//session_start();
 
 //config.php
 
@@ -16,7 +13,7 @@ $google_client = new Google_Client();
 $google_client->setClientId('');
 
 //Set the OAuth 2.0 Client Secret key Aqui tu CLAVE
-$google_client->setClientSecret('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');
+$google_client->setClientSecret('');
 
 //Set the OAuth 2.0 Redirect URI | URL AUTORIZADO
 $google_client->setRedirectUri('http://localhost/login.php');
@@ -27,3 +24,4 @@ $google_client->addScope('email');
 $google_client->addScope('profile');
 
 ?>
+
