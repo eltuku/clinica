@@ -1,11 +1,12 @@
 <?php
-session_start();
+//session_start();
 
 
-if (!isset($_SESSION['usuario'])) {
+/*if (!isset($_SESSION['usuario'])) {
  header("Location: index.php");
     exit();
 }
+*/
 
 echo "<p>Bienvenido</p>";
 echo "<p><a href='logout.php'>Cerrar sesión</a></p>";
